@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('identification');
-            $table->string('firtname');
+            $table->string('firstname');
             $table->string('lastname');
             $table->string('photo');
             // Añadir las columnas created_by_user y updated_by_user
