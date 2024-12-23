@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -41,6 +44,17 @@ class AuthController extends Controller
     public function me()
     {
         return response()->json(auth()->user());
+    }
+
+    public function register(Request $request)
+    {
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return response()->json($user, ['Usuario registrado ',201]);
     }
 
     /**
