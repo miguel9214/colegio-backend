@@ -3,7 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\CourseController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,3 +29,7 @@ Route::group([
     Route::post('me', [AuthController::class, 'me']);
 
 });
+
+Route::resource('students', [StudentController::class]);
+Route::resource('courses', [CourseController::class]);
+Route::post('register', [AuthController::class, 'register']);

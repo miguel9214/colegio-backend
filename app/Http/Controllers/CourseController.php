@@ -14,6 +14,10 @@ class CourseController extends Controller
         return response()->json($courses, ['Lista de cursos',200]);
     }
 
+    public function edit(){
+        
+    }
+
     public function show($id)
     {
         $course = Course::find($id);

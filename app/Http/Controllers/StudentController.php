@@ -26,6 +26,12 @@ class StudentController extends Controller
         }
     }
 
+
+    public function edit()
+    {
+        
+    }
+
     
 
     public function store(Request $request)
