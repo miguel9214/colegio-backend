@@ -14,8 +14,23 @@ class CourseController extends Controller
         return response()->json($courses, ['Lista de cursos',200]);
     }
 
-    public function edit(){
-        
+    public function assignStudent(Request $request, $courseId)
+    {
+        // Busca el curso por su ID
+        $course = Course::find($courseId);
+        // Obtiene el ID del estudiante desde la solicitud
+        $studentId = $request->student_id;
+
+        // Verifica si el curso y el estudiante existen
+        if ($course && Student::find($studentId)) {
+            // Asigna el estudiante al curso utilizando la relación muchos a muchos
+            $course->students()->attach($studentId);
+            // Retorna una respuesta JSON indicando éxito
+            return response()->json(['message' => 'Estudiante asignado al curso', 200]);
+        } else {
+            // Retorna una respuesta JSON indicando que el curso o el estudiante no fueron encontrados
+            return response()->json(['message' => 'Curso o estudiante no encontrado', 404]);
+        }
     }
 
     public function show($id)
@@ -40,7 +55,6 @@ class CourseController extends Controller
         return response()->json($course, ['Curso creado',201]);
     }
 
-
     public function update(Request $request, $id)
     {
         $course = Course::find($id);
@@ -57,7 +71,6 @@ class CourseController extends Controller
         }
     }
 
-
     public function delete($id)
     {
         $course = Course::find($id);
@@ -68,5 +81,5 @@ class CourseController extends Controller
         } else {
             return response()->json(['Curso no encontrado',404]);
         }
-    }   
+    }
 }

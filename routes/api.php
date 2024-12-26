@@ -16,20 +16,12 @@ use App\Http\Controllers\CourseController;
 |
 */
 
-Route::group([
-
-    'middleware' => 'api',
-    'prefix' => 'auth'
-
-], function ($router) {
-
+Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [AuthController::class, 'login']);
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('refresh',[AuthController::class, 'refresh']);
-    Route::post('me', [AuthController::class, 'me']);
-
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
+    Route::get('me', [AuthController::class, 'me'])->middleware('auth:api');
 });
 
-Route::resource('students', [StudentController::class]);
-Route::resource('courses', [CourseController::class]);
-Route::post('register', [AuthController::class, 'register']);
+Route::resource('students', StudentController::class);
+Route::resource('courses', CourseController::class);

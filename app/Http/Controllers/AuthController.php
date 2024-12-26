@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -17,7 +18,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login','register']]);
     }
 
     /**
@@ -48,13 +49,27 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        // Validar los datos de la solicitud
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
+
+        // Si la validación falla, retornar los errores
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        // Crear un nuevo usuario
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        return response()->json($user, ['Usuario registrado ',201]);
+        // Retornar una respuesta JSON con el usuario creado
+        return response()->json(['message' => 'Usuario registrado exitosamente', 'user' => $user], 201);
     }
 
     /**

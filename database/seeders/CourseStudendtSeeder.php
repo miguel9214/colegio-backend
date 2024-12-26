@@ -14,11 +14,9 @@ class CourseStudendtSeeder extends Seeder
     public function run(): void
     {
              DB::table('course_student')->insert([
-            'identification' => '123456',
-            'firstname' => 'miguel',
-            'lastname' => 'ramos',
-            'photo' => 'photo.jpg',
-            'created_by_user' => 1,
+            'course_id' => 1,
+            'student_id' => 1,
+
         ]);
     }
 }

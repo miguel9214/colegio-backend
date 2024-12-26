@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('course_student', function (Blueprint $table) {
             $table->id();
-            // Añadir las columnas created_by_user y updated_by_user
             $table->unsignedBigInteger('course_id')->nullable();
             $table->unsignedBigInteger('student_id')->nullable();
 
