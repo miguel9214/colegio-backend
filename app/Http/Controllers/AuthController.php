@@ -21,6 +21,13 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login','register']]);
     }
 
+    public function index()
+    {
+        $users = User::all();
+
+        return response()->json(['message' => 'Lista de usuarios', 'users' => $users], 201);
+    }
+
     /**
      * Get a JWT via given credentials.
      *
@@ -81,7 +88,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Sesion cerrada exitosamente'], 200);
     }
 
     /**
